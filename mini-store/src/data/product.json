@@ -1,0 +1,82 @@
+[
+  {
+    "id": "1",
+    "slug": "Grown-Alchemy",
+    "name": "Grown Alchemy",
+    "price": 299.99,
+    "image": "/product1.jpg",
+    "description": "Hydro Repair.",
+    "category": "Hair",
+    "stock": 15
+  },
+  {
+    "id": "2",
+    "slug": "Necessaire",
+    "name": "Necessaire",
+    "price": 1299.99,
+    "image": "/product2.jpg",
+    "description": "The Deodorant Eucalyptus.",
+    "category": "Skin",
+    "stock": 8
+  },
+  {
+    "id": "3",
+    "slug": "Ethereal",
+    "name": "Ethereal",
+    "price": 899.99,
+    "image": "/product3.jpg",
+    "description": "Honey Soap Disk.",
+    "category": "Body",
+    "stock": 12
+  },
+  {
+    "id": "4",
+    "slug": "Lumina",
+    "name": "Lumina",
+    "price": 399.99,
+    "image": "/product4.jpg",
+    "description": "Sage Soap.",
+    "category": "Body",
+    "stock": 20
+  },
+  {
+    "id": "5",
+    "slug": "Soja & Co",
+    "name": "Soja & Co",
+    "price": 799.99,
+    "image": "/product5.jpg",
+    "description": "Lavender Candle.",
+    "category": "Scent",
+    "stock": 6
+  },
+  {
+    "id": "6",
+    "slug": "Necessaire",
+    "name": "Necessaire",
+    "price": 149.99,
+    "image": "/product6.jpg",
+    "description": "The Body Lotion.",
+    "category": "Body",
+    "stock": 25
+  },
+  {
+    "id": "7",
+    "slug": "Necessaire",
+    "name": "Necessaire",
+    "price": 149.99,
+    "image": "/product6.jpg",
+    "description": "The Body Lotion.",
+    "category": "Body",
+    "stock": 30
+  },
+  {
+    "id": "8",
+    "slug": "Lumina",
+    "name": "Lumina",
+    "price": 1099.99,
+    "image": "/product4.jpg",
+    "description": "Sage Soap.",
+    "category": "Body",
+    "stock": 10
+  }
+]
