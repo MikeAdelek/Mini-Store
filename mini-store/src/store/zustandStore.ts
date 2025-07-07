@@ -1,12 +1,11 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
-import { CartState, Product, CartItem } from "@/types/product";
+import { CartState, Product } from "@/types/product";
 
 export const useCartStore = create<CartState>()(
   persist(
     (set, get) => ({
       items: [],
-
       addItem: (product: Product, quantity = 1) => {
         set((state) => {
           const existingItem = state.items.find(
@@ -22,14 +21,11 @@ export const useCartStore = create<CartState>()(
               )
             };
           }
-
           return {
             items: [...state.items, { product, quantity }]
           };
         });
       },
-
-      
 
       removeItem: (productId: string) => {
         set((state) => ({
@@ -42,7 +38,6 @@ export const useCartStore = create<CartState>()(
           get().removeItem(productId);
           return;
         }
-
         set((state) => ({
           items: state.items.map((item) =>
             item.product.id === productId ? { ...item, quantity } : item

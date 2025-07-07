@@ -1,6 +1,5 @@
 import React from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useCartStore } from "@/store/zustandStore";
 import { FaShoppingCart } from "react-icons/fa";
 
@@ -9,7 +8,6 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ title }) => {
-  const router = useRouter();
   const itemCount = useCartStore((state) => state.getItemCount());
 
   // Generate default title

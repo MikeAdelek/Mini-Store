@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { ShippingInfo } from "@/types/shipping";
 import { PaymentInfo } from "@/types/payment";
 

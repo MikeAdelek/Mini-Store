@@ -1,8 +1,7 @@
-import { StringLiteral } from "typescript";
 import { create } from "zustand";
 
 interface SearchState {
-  searchQuery: String;
+  searchQuery: string;
   selectedCategory: string;
   priceRange: { min: number; max: number };
   sortBy: "default" | "name" | "price-low" | "price-high" | "newest";

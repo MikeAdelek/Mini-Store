@@ -1,8 +1,7 @@
 "use client";
 
 import React from "react";
-import { useProducts, useProductById } from "@/hooks/useProduct";
-import { getProducts } from "@/services/productService";
+import { useProducts } from "@/hooks/useProduct";
 import ProductCard from "@/components/ProductCard";
 import { ProductGridSkeleton } from "./SupportComponents";
 

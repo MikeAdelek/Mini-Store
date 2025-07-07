@@ -3,7 +3,6 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { Product } from "@/types/product";
 import { useCartStore } from "@/store/zustandStore";
 import LoadingSpinner from "./LoadingSpinner";
@@ -21,7 +20,6 @@ const ProductDetailsClient: React.FC<ProductDetailsClientProps> = ({
   const [quantity, setQuantity] = React.useState(1);
   const [isAddingToCart, setIsAddingToCart] = React.useState(false);
   const { addItem } = useCartStore();
-  const router = useRouter();
 
   // move the  null check to the top before ant property access
 
@@ -43,12 +41,6 @@ const ProductDetailsClient: React.FC<ProductDetailsClientProps> = ({
     } finally {
       setIsAddingToCart(false);
     }
-  };
-
-  const handleBuyNow = () => {
-    handleAddToCart(product);
-    // Redirect to cart page after adding to cart
-    router.push("/cart");
   };
 
   return (

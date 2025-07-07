@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCartStore } from "@/store/zustandStore";
@@ -185,11 +184,6 @@ const CheckoutPage: React.FC = () => {
       setIsProcessing(false);
     }
   };
-
-  const subtotal = getTotal();
-  const tax = subtotal * 0.08;
-  const shipping = subtotal > 100 ? 0 : 9.99;
-  const total = subtotal + tax + shipping;
 
   // Show loading if processing or order complete
   if (isProcessing || isOrderComplete) {
