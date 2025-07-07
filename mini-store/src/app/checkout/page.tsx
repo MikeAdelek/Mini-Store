@@ -33,6 +33,7 @@ const CheckoutPage: React.FC = () => {
 
   const [currentStep, setCurrentStep] = useState(1);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [isOrderComplete, setIsOrderComplete] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const [shippingInfo, setShippingInfo] = useState<ShippingInfo>({
@@ -69,10 +70,17 @@ const CheckoutPage: React.FC = () => {
 
   // Redirect if cart is empty
   useEffect(() => {
-    if (items.length === 0) {
+    if (items.length === 0 && !isOrderComplete && !isProcessing) {
       router.push("/cart");
     }
-  }, [items, router]);
+  }, [items, router, isOrderComplete, isProcessing]);
+
+  // Update billing info when sameAsShipping changes
+  useEffect(() => {
+    if (sameAsShipping) {
+      setBillingInfo(shippingInfo);
+    }
+  }, [sameAsShipping, shippingInfo]);
 
   const formatCardNumber = (value: string) => {
     const v = value.replace(/\s+/g, "").replace(/[^0-9]/gi, "");
@@ -159,6 +167,11 @@ const CheckoutPage: React.FC = () => {
       // Simulate payment processing
       await new Promise((resolve) => setTimeout(resolve, 3000));
 
+      console.log("Payment successful, setting order complete flag...");
+
+      // Set order complete flag BEFORE clearing cart
+      setIsOrderComplete(true);
+
       // Clear cart after successful payment
       clearCart();
 
@@ -167,6 +180,7 @@ const CheckoutPage: React.FC = () => {
     } catch (error) {
       console.error("Payment failed:", error);
       setErrors({ payment: "Payment failed. Please try again." });
+      setIsOrderComplete(false);
     } finally {
       setIsProcessing(false);
     }
@@ -177,10 +191,29 @@ const CheckoutPage: React.FC = () => {
   const shipping = subtotal > 100 ? 0 : 9.99;
   const total = subtotal + tax + shipping;
 
-  if (items.length === 0) {
+  // Show loading if processing or order complete
+  if (isProcessing || isOrderComplete) {
     return (
-      <div className="bg-white p-6">
-        <LoadingSpinner />
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <LoadingSpinner />
+          <p className="mt-4 text-gray-600">
+            {isProcessing
+              ? "Processing your payment..."
+              : "Redirecting to confirmation..."}
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  if (items.length === 0 && !isOrderComplete) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <LoadingSpinner />
+          <p className="mt-4 text-gray-600">Redirecting to cart...</p>
+        </div>
       </div>
     );
   }
