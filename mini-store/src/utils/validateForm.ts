@@ -4,8 +4,26 @@ import { useState } from "react";
 import { ShippingInfo } from "@/types/shipping";
 import { PaymentInfo } from "@/types/payment";
 
+// Define the error types
+interface ValidationErrors {
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  phone?: string;
+  address?: string;
+  city?: string;
+  state?: string;
+  zipCode?: string;
+  country?: string;
+  cardNumber?: string;
+  expiryDate?: string;
+  cvv?: string;
+  cardholderName?: string;
+  payment?: string;
+}
+
 export const useShippingValidation = () => {
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<ValidationErrors>({});
 
   // shipping info Validation
   const [shippingInfo, setShippingInfo] = useState<ShippingInfo>({
@@ -22,7 +40,7 @@ export const useShippingValidation = () => {
 
   // validate shipping info
   const validateShippingInfo = () => {
-    const newErrors: Record<string, string> = {};
+    const newErrors: ValidationErrors = {};
 
     if (!shippingInfo.firstName.trim())
       newErrors.firstName = "First name is required";
@@ -53,7 +71,7 @@ export const useShippingValidation = () => {
 
   // validate payment info
   const validatePaymentInfo = () => {
-    const newErrors: Record<string, string> = {};
+    const newErrors: ValidationErrors = {};
 
     if (!paymentInfo.cardNumber.replace(/\s/g, ""))
       newErrors.cardNumber = "Card number is required";
@@ -75,19 +93,6 @@ export const useShippingValidation = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  // Billing info
-  const [billingInfo, setBillingInfo] = useState<ShippingInfo>({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    address: "",
-    city: "",
-    state: "",
-    zipCode: "",
-    country: "US"
-  });
-
   return {
     errors,
     setErrors,
@@ -95,8 +100,6 @@ export const useShippingValidation = () => {
     setShippingInfo,
     paymentInfo,
     setPaymentInfo,
-    billingInfo,
-    setBillingInfo,
     validateShippingInfo,
     validatePaymentInfo
   };

@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { useSearchStore } from "@/store/searchStore";
 
 // Supporting Components
 
@@ -24,39 +23,10 @@ const ProductGridSkeleton: React.FC = () => (
   </div>
 );
 
-const SortDropdown: React.FC = () => {
-  const { sortBy, setSortBy } = useSearchStore();
-
-  return (
-    <select
-      value={sortBy}
-      onChange={(e) =>
-        setSortBy(
-          e.target.value as
-            | "default"
-            | "name"
-            | "price-low"
-            | "price-high"
-            | "newest"
-        )
-      }
-      className="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
-      aria-label="Sort products"
-    >
-      <option value="default">Sort by</option>
-      <option value="name">Name (A-Z)</option>
-      <option value="price-low">Price (Low to High)</option>
-      <option value="price-high">Price (High to Low)</option>
-      <option value="newest">Newest First</option>
-    </select>
-  );
-};
-
 const SupportComponents = {
-  ProductGridSkeleton,
-  SortDropdown
+  ProductGridSkeleton
 };
 
 export default SupportComponents;
 // Exporting components for use in other parts of the application
-export { ProductGridSkeleton, SortDropdown };
+export { ProductGridSkeleton };

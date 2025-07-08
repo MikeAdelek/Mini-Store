@@ -6,25 +6,8 @@ import { useRouter } from "next/navigation";
 import { useCartStore } from "@/store/zustandStore";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import Header from "@/components/Header";
-
-interface ShippingInfo {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  address: string;
-  city: string;
-  state: string;
-  zipCode: string;
-  country: string;
-}
-
-interface PaymentInfo {
-  cardNumber: string;
-  expiryDate: string;
-  cvv: string;
-  cardholderName: string;
-}
+import { formatCardNumber, formatExpiryDate } from "@/lib/formatters";
+import { useShippingValidation } from "@/utils/validateForm";
 
 const CheckoutPage: React.FC = () => {
   const { items, clearCart } = useCartStore();
@@ -33,26 +16,16 @@ const CheckoutPage: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [isProcessing, setIsProcessing] = useState(false);
   const [isOrderComplete, setIsOrderComplete] = useState(false);
-  const [errors, setErrors] = useState<Record<string, string>>({});
-
-  const [shippingInfo, setShippingInfo] = useState<ShippingInfo>({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    address: "",
-    city: "",
-    state: "",
-    zipCode: "",
-    country: "US"
-  });
-
-  const [paymentInfo, setPaymentInfo] = useState<PaymentInfo>({
-    cardNumber: "",
-    expiryDate: "",
-    cvv: "",
-    cardholderName: ""
-  });
+  const {
+    errors,
+    setErrors,
+    shippingInfo,
+    setShippingInfo,
+    validateShippingInfo,
+    paymentInfo,
+    setPaymentInfo,
+    validatePaymentInfo
+  } = useShippingValidation();
 
   const [sameAsShipping, setSameAsShipping] = useState(true);
 
@@ -63,81 +36,13 @@ const CheckoutPage: React.FC = () => {
     }
   }, [items, router, isOrderComplete, isProcessing]);
 
-  const formatCardNumber = (value: string) => {
-    const v = value.replace(/\s+/g, "").replace(/[^0-9]/gi, "");
-    const matches = v.match(/\d{4,16}/g);
-    const match = (matches && matches[0]) || "";
-    const parts = [];
-    for (let i = 0, len = match.length; i < len; i += 4) {
-      parts.push(match.substring(i, i + 4));
-    }
-    if (parts.length) {
-      return parts.join(" ");
-    } else {
-      return v;
-    }
-  };
-
-  const formatExpiryDate = (value: string) => {
-    const v = value.replace(/\s+/g, "").replace(/[^0-9]/gi, "");
-    if (v.length >= 2) {
-      return v.substring(0, 2) + "/" + v.substring(2, 4);
-    }
-    return v;
-  };
-
-  const validateShippingInfo = () => {
-    const newErrors: Record<string, string> = {};
-
-    if (!shippingInfo.firstName.trim())
-      newErrors.firstName = "First name is required";
-    if (!shippingInfo.lastName.trim())
-      newErrors.lastName = "Last name is required";
-    if (!shippingInfo.email.trim()) newErrors.email = "Email is required";
-    else if (!/\S+@\S+\.\S+/.test(shippingInfo.email))
-      newErrors.email = "Email is invalid";
-    if (!shippingInfo.phone.trim())
-      newErrors.phone = "Phone number is required";
-    if (!shippingInfo.address.trim()) newErrors.address = "Address is required";
-    if (!shippingInfo.city.trim()) newErrors.city = "City is required";
-    if (!shippingInfo.state.trim()) newErrors.state = "State is required";
-    if (!shippingInfo.zipCode.trim())
-      newErrors.zipCode = "ZIP code is required";
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const validatePaymentInfo = () => {
-    const newErrors: Record<string, string> = {};
-
-    if (!paymentInfo.cardNumber.replace(/\s/g, ""))
-      newErrors.cardNumber = "Card number is required";
-    else if (paymentInfo.cardNumber.replace(/\s/g, "").length < 13)
-      newErrors.cardNumber = "Card number is invalid";
-
-    if (!paymentInfo.expiryDate)
-      newErrors.expiryDate = "Expiry date is required";
-    else if (!/^\d{2}\/\d{2}$/.test(paymentInfo.expiryDate))
-      newErrors.expiryDate = "Expiry date is invalid";
-
-    if (!paymentInfo.cvv) newErrors.cvv = "CVV is required";
-    else if (paymentInfo.cvv.length < 3) newErrors.cvv = "CVV is invalid";
-
-    if (!paymentInfo.cardholderName.trim())
-      newErrors.cardholderName = "Cardholder name is required";
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
   const handleShippingSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validateShippingInfo()) {
       setCurrentStep(2);
     }
   };
-
+  
   const handlePaymentSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validatePaymentInfo()) return;
@@ -321,7 +226,7 @@ const CheckoutPage: React.FC = () => {
                           })
                         }
                         className={`mt-1 block w-full border rounded-md px-3 py-2 shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 ${
-                          errors.firstName
+                          shippingInfo.firstName
                             ? "border-red-300"
                             : "border-gray-300"
                         }`}
