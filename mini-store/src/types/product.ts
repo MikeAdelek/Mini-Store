@@ -10,7 +10,7 @@ export interface Product {
 }
 
 export interface CartItem {
-  [x: string]: Key | null | undefined;
+  id: string;
   product: Product;
   quantity: number;
 }

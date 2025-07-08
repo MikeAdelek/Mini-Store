@@ -27,7 +27,7 @@ interface PaymentInfo {
 }
 
 const CheckoutPage: React.FC = () => {
-  const { items, getTotal, getSubTotal, clearCart } = useCartStore();
+  const { items, clearCart } = useCartStore();
   const router = useRouter();
 
   const [currentStep, setCurrentStep] = useState(1);
@@ -55,17 +55,6 @@ const CheckoutPage: React.FC = () => {
   });
 
   const [sameAsShipping, setSameAsShipping] = useState(true);
-  const [billingInfo, setBillingInfo] = useState<ShippingInfo>({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    address: "",
-    city: "",
-    state: "",
-    zipCode: "",
-    country: "US"
-  });
 
   // Redirect if cart is empty
   useEffect(() => {
@@ -73,13 +62,6 @@ const CheckoutPage: React.FC = () => {
       router.push("/cart");
     }
   }, [items, router, isOrderComplete, isProcessing]);
-
-  // Update billing info when sameAsShipping changes
-  useEffect(() => {
-    if (sameAsShipping) {
-      setBillingInfo(shippingInfo);
-    }
-  }, [sameAsShipping, shippingInfo]);
 
   const formatCardNumber = (value: string) => {
     const v = value.replace(/\s+/g, "").replace(/[^0-9]/gi, "");
@@ -585,24 +567,7 @@ const CheckoutPage: React.FC = () => {
                       type="checkbox"
                       id="sameAsShipping"
                       checked={sameAsShipping}
-                      onChange={(e) => {
-                        setSameAsShipping(e.target.checked);
-                        if (e.target.checked) {
-                          setBillingInfo(shippingInfo);
-                        } else {
-                          setBillingInfo({
-                            firstName: "",
-                            lastName: "",
-                            email: "",
-                            phone: "",
-                            address: "",
-                            city: "",
-                            state: "",
-                            zipCode: "",
-                            country: "US"
-                          });
-                        }
-                      }}
+                      onChange={(e) => setSameAsShipping(e.target.checked)}
                       className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                     />
                     <label

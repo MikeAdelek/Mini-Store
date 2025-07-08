@@ -22,7 +22,14 @@ export const useCartStore = create<CartState>()(
             };
           }
           return {
-            items: [...state.items, { product, quantity }]
+            items: [
+              ...state.items,
+              {
+                id: `cart-${product.id}-${Date.now()}`, // Generate unique ID for cart item
+                product,
+                quantity
+              }
+            ]
           };
         });
       },

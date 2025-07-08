@@ -65,7 +65,20 @@ export default async function ProductPage({
   }
 
   if (!product) {
-    <span>Not Found 404</span>;
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen">
+        <h1 className="text-4xl font-bold mb-4">404 - Product Not Found</h1>
+        <p className="text-gray-600 mb-8">
+          The product you&apos;re looking for doesn&apos;t exist.
+        </p>
+        <a
+          href="/"
+          className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600"
+        >
+          Return to Home
+        </a>
+      </div>
+    );
   }
 
   return (

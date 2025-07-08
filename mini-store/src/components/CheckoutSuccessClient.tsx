@@ -193,7 +193,9 @@ const CheckoutSuccessClient: React.FC = () => {
       {/* What's Next Section */}
       <div className="bg-white shadow-sm rounded-lg overflow-hidden mb-8">
         <div className="px-6 py-4 border-b border-gray-200">
-          <h2 className="text-lg font-medium text-gray-900">What's Next?</h2>
+          <h2 className="text-lg font-medium text-gray-900">
+            What&apos;s Next?
+          </h2>
         </div>
 
         <div className="px-6 py-4">
@@ -209,8 +211,8 @@ const CheckoutSuccessClient: React.FC = () => {
                   Order Confirmation
                 </h3>
                 <p className="text-sm text-gray-600">
-                  You'll receive an email confirmation with your order details
-                  shortly.
+                  You&apos;ll receive an email confirmation with your order
+                  details shortly.
                 </p>
               </div>
             </div>
@@ -226,7 +228,7 @@ const CheckoutSuccessClient: React.FC = () => {
                   Processing
                 </h3>
                 <p className="text-sm text-gray-600">
-                  We'll prepare your order for shipment within 1-2 business
+                  We&apos;ll prepare your order for shipment within 1-2 business
                   days.
                 </p>
               </div>
@@ -241,7 +243,8 @@ const CheckoutSuccessClient: React.FC = () => {
               <div className="ml-4">
                 <h3 className="text-sm font-medium text-gray-900">Shipping</h3>
                 <p className="text-sm text-gray-600">
-                  You'll receive tracking information once your order ships.
+                  You&apos;ll receive tracking information once your order
+                  ships.
                 </p>
               </div>
             </div>
@@ -321,7 +324,7 @@ const CheckoutSuccessClient: React.FC = () => {
         <div className="bg-gray-100 rounded-lg p-6">
           <h3 className="text-lg font-medium text-gray-900 mb-2">Need Help?</h3>
           <p className="text-gray-600 mb-4">
-            If you have any questions about your order, we're here to help.
+            If you have any questions about your order, we&apos;re here to help.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
