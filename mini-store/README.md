@@ -99,6 +99,10 @@ mini-store/
 4. **Open in browser**
    Navigate to `http://localhost:3000`
 
+5. **Live Preview**
+   Navigate to `https://mini-store-two-rouge.vercel.app/`
+
+
 ### Available Scripts
 
 | Command | Description |
